@@ -4,319 +4,366 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GameFix Crew - Gaming Support Team</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-  <!-- FontAwesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    /* Reset & Global Styles */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: #1f1c2c;
-      color: #fff;
-      overflow-x: hidden;
-      position: relative;
-      min-height: 100vh;
-    }
-    /* Canvas Particle Background */
-    #bgCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
-    }
-    /* Header */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 50px;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      z-index: 10;
-    }
-    header .logo {
-      display: flex;
-      align-items: center;
-      font-size: 1.8em;
-      font-weight: bold;
-    }
-    header .logo img {
-      width: 50px;
-      margin-right: 10px;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 30px;
-    }
-    nav ul li a {
-      text-decoration: none;
-      color: #fff;
-      font-weight: 500;
-      position: relative;
-      transition: color 0.3s;
-    }
-    nav ul li a:hover {
-      color: #ff4081;
-    }
-    nav ul li a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      background: #ff4081;
-      bottom: -5px;
-      left: 0;
-      transition: width 0.3s;
-    }
-    nav ul li a:hover::after {
-      width: 100%;
-    }
-    /* Hero Section */
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      position: relative;
-    }
-    .hero h1 {
-      font-size: 3.5em;
-      margin-bottom: 20px;
-      animation: fadeInDown 1s ease-out;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-    }
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .hero p {
-      font-size: 1.2em;
-      margin-bottom: 40px;
-      animation: fadeInUp 1s ease-out;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .hero .glow-button {
-      background: linear-gradient(45deg, #ff4081, #ff8a80);
-      border: none;
-      padding: 15px 30px;
-      font-size: 1.2em;
-      color: #fff;
-      border-radius: 50px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hero .glow-button:before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
-      transform: scale(0);
-      transition: transform 0.5s ease;
-      pointer-events: none;
-    }
-    .hero .glow-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255,64,129,0.7);
-    }
-    .hero .glow-button:hover:before {
-      transform: scale(1);
-    }
-    /* Scroll Down Arrow */
-    .scroll-down {
-      position: absolute;
-      bottom: 30px;
-      font-size: 2em;
-      animation: bounce 2s infinite;
-      cursor: pointer;
-      color: #fff;
-    }
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
-    }
-    /* Services Section */
-    .services {
-      padding: 80px 20px;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.3);
-    }
-    .services h2 {
-      font-size: 2.5em;
-      margin-bottom: 40px;
-    }
-    .service-items {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-    }
-    .service-item {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 15px;
-      width: 250px;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .service-item:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-    .service-item i {
-      font-size: 3em;
-      color: #ff4081;
-      margin-bottom: 20px;
-    }
-    .service-item h3 {
-      font-size: 1.5em;
-      margin-bottom: 10px;
-    }
-    .service-item p {
-      font-size: 1em;
-      line-height: 1.5;
-    }
-    /* Testimonial Section */
-    .testimonial {
-      padding: 80px 20px;
-      background: #1f1c2c;
-      text-align: center;
-      position: relative;
-    }
-    .testimonial::before {
-      content: "“";
-      font-size: 5em;
-      color: rgba(255, 64, 129, 0.3);
-      position: absolute;
-      top: -20px;
-      left: calc(50% - 30px);
-    }
-    .testimonial p {
-      font-size: 1.2em;
-      max-width: 700px;
-      margin: 0 auto;
-      line-height: 1.5;
-      font-style: italic;
-      animation: fadeIn 1s ease-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    /* Footer */
-    footer {
-      background: rgba(0, 0, 0, 0.5);
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-    }
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      header {
-        padding: 15px 20px;
-      }
-      nav ul {
-        gap: 20px;
-      }
-      .hero h1 {
-        font-size: 2.5em;
-      }
-      .services {
-        padding: 60px 20px;
-      }
-      .service-item {
-        width: 200px;
-      }
-    }
-  </style>
 </head>
 <body>
-  <!-- Particle Background Canvas -->
-  <canvas id="bgCanvas"></canvas>
-  
-  <!-- Header -->
-  <header>
-    <div class="logo">
-      GameFix Crew
-    </div>
-    <nav>
-      <ul>
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#testimonial">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-  
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <h1>24/7 Support, Built by Pros</h1>
-    <p>Your ultimate gaming support experience where passion meets expertise.</p>
-    <button class="glow-button" id="actionButton">Get Support</button>
-    <div class="scroll-down" onclick="scrollToSection('services')">
-      <i class="fas fa-chevron-down"></i>
-    </div>
-  </section>
-  
-  <!-- Services Section -->
-  <section class="services" id="services">
-    <h2>Our Services</h2>
-    <div class="service-items">
-      <div class="service-item">
-        <i class="fas fa-headset"></i>
-        <h3>24/7 Support</h3>
-        <p>Round-the-clock assistance to keep your game running smoothly.</p>
-      </div>
-      <div class="service-item">
-        <i class="fas fa-code"></i>
-        <h3>Pro Developers</h3>
-        <p>Skilled professionals delivering top-tier gaming solutions.</p>
-      </div>
-      <div class="service-item">
-        <i class="fas fa-gamepad"></i>
-        <h3>Cutting-Edge Tech</h3>
-        <p>Innovative tools and technologies powering your gaming experience.</p>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Testimonial Section -->
-  <section class="testimonial" id="testimonial">
-    <p>"GameFix Crew transformed my gaming experience with their lightning-fast support and innovative solutions. They're the real deal!" – A Satisfied Gamer</p>
-  </section>
-  
-  <!-- Footer -->
-  <footer>
-    Coded by Shuaib, 2025.
-  </footer>
-  
-  <script>
-    // Smooth scroll to sections
-    function scrollToSection(id) {
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
+<script>
+(function() {
+  // Load external resources dynamically.
+  function loadExternalResources() {
+    const head = document.head;
+    const googleFonts = document.createElement('link');
+    googleFonts.rel = 'stylesheet';
+    googleFonts.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap';
+    head.appendChild(googleFonts);
     
-    // Simple Particle Background Animation
+    const fontAwesome = document.createElement('link');
+    fontAwesome.rel = 'stylesheet';
+    fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+    head.appendChild(fontAwesome);
+  }
+  
+  // Add CSS styles via a dynamically created style element.
+  function addStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Global Reset & Base Styles */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: 'Montserrat', sans-serif;
+        background: #1f1c2c;
+        color: #fff;
+        overflow-x: hidden;
+        position: relative;
+        min-height: 100vh;
+      }
+      /* Particle Background Canvas */
+      #bgCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(135deg, #1f1c2c, #928dab);
+      }
+      /* Header */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        z-index: 10;
+      }
+      header .logo {
+        display: flex;
+        align-items: center;
+        font-size: 1.8em;
+        font-weight: bold;
+      }
+      header .logo img {
+        width: 50px;
+        margin-right: 10px;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+      }
+      nav ul li a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 500;
+        position: relative;
+        transition: color 0.3s;
+      }
+      nav ul li a:hover {
+        color: #ff4081;
+      }
+      nav ul li a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: #ff4081;
+        bottom: -5px;
+        left: 0;
+        transition: width 0.3s;
+      }
+      nav ul li a:hover::after {
+        width: 100%;
+      }
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 20px;
+        position: relative;
+      }
+      .hero h1 {
+        font-size: 3.5em;
+        margin-bottom: 20px;
+        animation: fadeInDown 1s ease-out;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+      }
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-50px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .hero p {
+        font-size: 1.2em;
+        margin-bottom: 40px;
+        animation: fadeInUp 1s ease-out;
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .glow-button {
+        background: linear-gradient(45deg, #ff4081, #ff8a80);
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2em;
+        color: #fff;
+        border-radius: 50px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .glow-button:before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+        transform: scale(0);
+        transition: transform 0.5s ease;
+        pointer-events: none;
+      }
+      .glow-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255,64,129,0.7);
+      }
+      .glow-button:hover:before {
+        transform: scale(1);
+      }
+      /* Scroll Down Arrow */
+      .scroll-down {
+        position: absolute;
+        bottom: 30px;
+        font-size: 2em;
+        animation: bounce 2s infinite;
+        cursor: pointer;
+        color: #fff;
+      }
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+        40% { transform: translateY(-10px); }
+        60% { transform: translateY(-5px); }
+      }
+      /* Services Section */
+      .services {
+        padding: 80px 20px;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.3);
+      }
+      .services h2 {
+        font-size: 2.5em;
+        margin-bottom: 40px;
+      }
+      .service-items {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+      .service-item {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 15px;
+        width: 250px;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .service-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      }
+      .service-item i {
+        font-size: 3em;
+        color: #ff4081;
+        margin-bottom: 20px;
+      }
+      .service-item h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+      }
+      .service-item p {
+        font-size: 1em;
+        line-height: 1.5;
+      }
+      /* Testimonial Section */
+      .testimonial {
+        padding: 80px 20px;
+        background: #1f1c2c;
+        text-align: center;
+        position: relative;
+      }
+      .testimonial::before {
+        content: "“";
+        font-size: 5em;
+        color: rgba(255, 64, 129, 0.3);
+        position: absolute;
+        top: -20px;
+        left: calc(50% - 30px);
+      }
+      .testimonial p {
+        font-size: 1.2em;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.5;
+        font-style: italic;
+        animation: fadeIn 1s ease-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      /* Footer */
+      footer {
+        background: rgba(0, 0, 0, 0.5);
+        text-align: center;
+        padding: 20px;
+        font-size: 0.9em;
+      }
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        header { padding: 15px 20px; }
+        nav ul { gap: 20px; }
+        .hero h1 { font-size: 2.5em; }
+        .services { padding: 60px 20px; }
+        .service-item { width: 200px; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  
+  // Helper function to create an element with attributes and children.
+  function createElement(tag, attributes, children) {
+    const element = document.createElement(tag);
+    if (attributes) {
+      for (const key in attributes) {
+        if (key === 'className') {
+          element.className = attributes[key];
+        } else if (key === 'innerHTML') {
+          element.innerHTML = attributes[key];
+        } else {
+          element.setAttribute(key, attributes[key]);
+        }
+      }
+    }
+    if (children) {
+      children.forEach(child => {
+        if (typeof child === 'string') {
+          element.appendChild(document.createTextNode(child));
+        } else {
+          element.appendChild(child);
+        }
+      });
+    }
+    return element;
+  }
+  
+  // Build the entire DOM structure via JavaScript.
+  function buildDOM() {
+    const body = document.body;
+    
+    // Create canvas for particle background.
+    const canvas = createElement('canvas', { id: 'bgCanvas' });
+    body.appendChild(canvas);
+    
+    // Header
+    const header = createElement('header');
+    const logoDiv = createElement('div', { className: 'logo' }, [
+      createElement('img', { src: '', alt: '' }),
+      document.createTextNode('GameFix Crew')
+    ]);
+    header.appendChild(logoDiv);
+    
+    const nav = createElement('nav');
+    const ul = createElement('ul');
+    const navItems = [
+      { text: 'Home', href: '#hero' },
+      { text: 'Services', href: '#services' },
+      { text: 'Contact', href: '#testimonial' }
+    ];
+    navItems.forEach(item => {
+      const li = createElement('li');
+      const a = createElement('a', { href: item.href }, [item.text]);
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    nav.appendChild(ul);
+    header.appendChild(nav);
+    body.appendChild(header);
+    
+    // Hero Section
+    const hero = createElement('section', { className: 'hero', id: 'hero' });
+    hero.appendChild(createElement('h1', { innerHTML: '24/7 Support, Built by Pros' }));
+    hero.appendChild(createElement('p', { innerHTML: 'Your ultimate gaming support experience where passion meets expertise.' }));
+    const heroButton = createElement('button', { className: 'glow-button', id: 'actionButton' }, ['Get Support']);
+    hero.appendChild(heroButton);
+    const scrollDown = createElement('div', { className: 'scroll-down' }, [
+      createElement('i', { className: 'fas fa-chevron-down' })
+    ]);
+    scrollDown.addEventListener('click', () => {
+      document.getElementById('services').scrollIntoView({ behavior: 'smooth' });
+    });
+    hero.appendChild(scrollDown);
+    body.appendChild(hero);
+    
+    // Services Section
+    const services = createElement('section', { className: 'services', id: 'services' });
+    services.appendChild(createElement('h2', { innerHTML: 'Our Services' }));
+    const serviceItemsDiv = createElement('div', { className: 'service-items' });
+    const servicesData = [
+      { icon: 'fas fa-headset', title: '24/7 Support', text: 'Round-the-clock assistance to keep your game running smoothly.' },
+      { icon: 'fas fa-code', title: 'Pro Developers', text: 'Skilled professionals delivering top-tier gaming solutions.' },
+      { icon: 'fas fa-gamepad', title: 'Cutting-Edge Tech', text: 'Innovative tools and technologies powering your gaming experience.' }
+    ];
+    servicesData.forEach(service => {
+      const serviceItem = createElement('div', { className: 'service-item' });
+      serviceItem.appendChild(createElement('i', { className: service.icon }));
+      serviceItem.appendChild(createElement('h3', { innerHTML: service.title }));
+      serviceItem.appendChild(createElement('p', { innerHTML: service.text }));
+      serviceItemsDiv.appendChild(serviceItem);
+    });
+    services.appendChild(serviceItemsDiv);
+    body.appendChild(services);
+    
+    // Testimonial Section
+    const testimonial = createElement('section', { className: 'testimonial', id: 'testimonial' });
+    testimonial.appendChild(createElement('p', { innerHTML: '"GameFix Crew transformed my gaming experience with their lightning-fast support and innovative solutions. They\'re the real deal!" – A Satisfied Gamer' }));
+    body.appendChild(testimonial);
+    
+    // Footer
+    const footer = createElement('footer', { innerHTML: 'Coded by Shuaib Evans, 2025.' });
+    body.appendChild(footer);
+  }
+  
+  // Particle background animation entirely in JavaScript.
+  function particleAnimation() {
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let particlesArray = [];
@@ -360,15 +407,23 @@
     
     function animateParticles(){
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let particle of particlesArray){
+      particlesArray.forEach(particle => {
         particle.update();
         particle.draw();
-      }
+      });
       requestAnimationFrame(animateParticles);
     }
     
     initParticles();
     animateParticles();
-  </script>
+  }
+  
+  // Initialize everything.
+  loadExternalResources();
+  addStyles();
+  buildDOM();
+  particleAnimation();
+})();
+</script>
 </body>
 </html>
