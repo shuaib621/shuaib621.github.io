@@ -4,40 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GameFix Crew - Gaming Support Team</title>
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    /* Global Reset & Base Styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* Reset & Global Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      background: #1f1c2c;
       color: #fff;
       overflow-x: hidden;
+      position: relative;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
-    /* Header Styles */
-    header {
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px 50px;
+    /* Canvas Particle Background */
+    #bgCanvas {
       position: fixed;
-      width: 100%;
       top: 0;
-      z-index: 100;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+    }
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
+      z-index: 10;
     }
     header .logo {
+      display: flex;
+      align-items: center;
       font-size: 1.8em;
       font-weight: bold;
-      letter-spacing: 1px;
+    }
+    header .logo img {
+      width: 50px;
+      margin-right: 10px;
     }
     nav ul {
       list-style: none;
@@ -49,73 +63,55 @@
       color: #fff;
       font-weight: 500;
       position: relative;
-      transition: color 0.3s ease;
-    }
-    nav ul li a::after {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -5px;
-      left: 0;
-      background-color: #ff4081;
-      transition: width 0.3s ease;
+      transition: color 0.3s;
     }
     nav ul li a:hover {
       color: #ff4081;
     }
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #ff4081;
+      bottom: -5px;
+      left: 0;
+      transition: width 0.3s;
+    }
     nav ul li a:hover::after {
       width: 100%;
     }
-    /* Main Section Styles */
-    main {
-      margin-top: 100px;
-      text-align: center;
-      padding: 100px 20px;
-      flex: 1;
+    /* Hero Section */
+    .hero {
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
     }
-    main h1 {
-      font-size: 3em;
+    .hero h1 {
+      font-size: 3.5em;
       margin-bottom: 20px;
       animation: fadeInDown 1s ease-out;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     }
     @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .testimonial {
-      background: rgba(0, 0, 0, 0.6);
-      border-left: 4px solid #ff4081;
-      padding: 30px;
-      max-width: 600px;
-      margin: 40px auto;
-      font-style: italic;
-      line-height: 1.5;
-      position: relative;
+    .hero p {
+      font-size: 1.2em;
+      margin-bottom: 40px;
       animation: fadeInUp 1s ease-out;
     }
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .glow-button {
-      margin-top: 30px;
+    .hero .glow-button {
       background: linear-gradient(45deg, #ff4081, #ff8a80);
       border: none;
       padding: 15px 30px;
@@ -127,7 +123,7 @@
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .glow-button:before {
+    .hero .glow-button:before {
       content: "";
       position: absolute;
       top: -50%;
@@ -139,18 +135,99 @@
       transition: transform 0.5s ease;
       pointer-events: none;
     }
-    .glow-button:hover {
+    .hero .glow-button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255, 64, 129, 0.7);
+      box-shadow: 0 0 20px rgba(255,64,129,0.7);
     }
-    .glow-button:hover:before {
+    .hero .glow-button:hover:before {
       transform: scale(1);
     }
-    /* Footer Styles */
+    /* Scroll Down Arrow */
+    .scroll-down {
+      position: absolute;
+      bottom: 30px;
+      font-size: 2em;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      color: #fff;
+    }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+    /* Services Section */
+    .services {
+      padding: 80px 20px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .services h2 {
+      font-size: 2.5em;
+      margin-bottom: 40px;
+    }
+    .service-items {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    .service-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      width: 250px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .service-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .service-item i {
+      font-size: 3em;
+      color: #ff4081;
+      margin-bottom: 20px;
+    }
+    .service-item h3 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .service-item p {
+      font-size: 1em;
+      line-height: 1.5;
+    }
+    /* Testimonial Section */
+    .testimonial {
+      padding: 80px 20px;
+      background: #1f1c2c;
+      text-align: center;
+      position: relative;
+    }
+    .testimonial::before {
+      content: "“";
+      font-size: 5em;
+      color: rgba(255, 64, 129, 0.3);
+      position: absolute;
+      top: -20px;
+      left: calc(50% - 30px);
+    }
+    .testimonial p {
+      font-size: 1.2em;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.5;
+      font-style: italic;
+      animation: fadeIn 1s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    /* Footer */
     footer {
       background: rgba(0, 0, 0, 0.5);
       text-align: center;
-      padding: 15px 20px;
+      padding: 20px;
       font-size: 0.9em;
     }
     /* Responsive Adjustments */
@@ -161,53 +238,138 @@
       nav ul {
         gap: 20px;
       }
-      main h1 {
+      .hero h1 {
         font-size: 2.5em;
       }
-      .testimonial {
-        margin: 20px;
-        padding: 20px;
+      .services {
+        padding: 60px 20px;
       }
-      .glow-button {
-        padding: 12px 25px;
-        font-size: 1em;
+      .service-item {
+        width: 200px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Particle Background Canvas -->
+  <canvas id="bgCanvas"></canvas>
+  
+  <!-- Header -->
   <header>
     <div class="logo">
+      <img src="https://via.placeholder.com/50" alt="Gaming Logo" />
       GameFix Crew
     </div>
     <nav>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Contact</a></li>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#testimonial">Contact</a></li>
       </ul>
     </nav>
   </header>
-  <main>
+  
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
     <h1>24/7 Support, Built by Pros</h1>
-    <div class="testimonial">
-      "GameFix Crew is the ultimate gaming support team! Their rapid response and innovative solutions transformed my gaming experience."
-      <br> – A Satisfied Gamer
-    </div>
+    <p>Your ultimate gaming support experience where passion meets expertise.</p>
     <button class="glow-button" id="actionButton">Get Support</button>
-  </main>
+    <div class="scroll-down" onclick="scrollToSection('services')">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+  
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <h2>Our Services</h2>
+    <div class="service-items">
+      <div class="service-item">
+        <i class="fas fa-headset"></i>
+        <h3>24/7 Support</h3>
+        <p>Round-the-clock assistance to keep your game running smoothly.</p>
+      </div>
+      <div class="service-item">
+        <i class="fas fa-code"></i>
+        <h3>Pro Developers</h3>
+        <p>Skilled professionals delivering top-tier gaming solutions.</p>
+      </div>
+      <div class="service-item">
+        <i class="fas fa-gamepad"></i>
+        <h3>Cutting-Edge Tech</h3>
+        <p>Innovative tools and technologies powering your gaming experience.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonial Section -->
+  <section class="testimonial" id="testimonial">
+    <p>"GameFix Crew transformed my gaming experience with their lightning-fast support and innovative solutions. They're the real deal!" – A Satisfied Gamer</p>
+  </section>
+  
+  <!-- Footer -->
   <footer>
     Coded by Shuaib, 2025.
   </footer>
+  
   <script>
-    // Enhance button interactivity
-    const button = document.getElementById('actionButton');
-    button.addEventListener('mouseover', () => {
-      button.style.transform = 'scale(1.05)';
+    // Smooth scroll to sections
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Simple Particle Background Animation
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray = [];
+    const numberOfParticles = 100;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    window.addEventListener('resize', function(){
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     });
-    button.addEventListener('mouseout', () => {
-      button.style.transform = 'scale(1)';
-    });
+    
+    class Particle {
+      constructor(){
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+      }
+      update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width) this.speedX = -this.speedX;
+        if (this.y < 0 || this.y > canvas.height) this.speedY = -this.speedY;
+      }
+      draw(){
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    
+    function initParticles() {
+      particlesArray = [];
+      for (let i = 0; i < numberOfParticles; i++){
+        particlesArray.push(new Particle());
+      }
+    }
+    
+    function animateParticles(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let particle of particlesArray){
+        particle.update();
+        particle.draw();
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    
+    initParticles();
+    animateParticles();
   </script>
 </body>
 </html>
