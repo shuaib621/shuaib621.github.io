@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GameFix Crew - Gaming Support Team</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Global Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Header Styles */
+    header {
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 50px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    header .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    nav ul li a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #ff4081;
+      transition: width 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #ff4081;
+    }
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+    /* Main Section Styles */
+    main {
+      margin-top: 100px;
+      text-align: center;
+      padding: 100px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    main h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease-out;
+    }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .testimonial {
+      background: rgba(0, 0, 0, 0.6);
+      border-left: 4px solid #ff4081;
+      padding: 30px;
+      max-width: 600px;
+      margin: 40px auto;
+      font-style: italic;
+      line-height: 1.5;
+      position: relative;
+      animation: fadeInUp 1s ease-out;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .glow-button {
+      margin-top: 30px;
+      background: linear-gradient(45deg, #ff4081, #ff8a80);
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .glow-button:before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+      transform: scale(0);
+      transition: transform 0.5s ease;
+      pointer-events: none;
+    }
+    .glow-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 64, 129, 0.7);
+    }
+    .glow-button:hover:before {
+      transform: scale(1);
+    }
+    /* Footer Styles */
+    footer {
+      background: rgba(0, 0, 0, 0.5);
+      text-align: center;
+      padding: 15px 20px;
+      font-size: 0.9em;
+    }
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+      }
+      nav ul {
+        gap: 20px;
+      }
+      main h1 {
+        font-size: 2.5em;
+      }
+      .testimonial {
+        margin: 20px;
+        padding: 20px;
+      }
+      .glow-button {
+        padding: 12px 25px;
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      GameFix Crew
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>24/7 Support, Built by Pros</h1>
+    <div class="testimonial">
+      "GameFix Crew is the ultimate gaming support team! Their rapid response and innovative solutions transformed my gaming experience."
+      <br> – A Satisfied Gamer
+    </div>
+    <button class="glow-button" id="actionButton">Get Support</button>
+  </main>
+  <footer>
+    Coded by Shuaib Evans, 2025.
+  </footer>
+  <script>
+    // Enhance button interactivity
+    const button = document.getElementById('actionButton');
+    button.addEventListener('mouseover', () => {
+      button.style.transform = 'scale(1.05)';
+    });
+    button.addEventListener('mouseout', () => {
+      button.style.transform = 'scale(1)';
+    });
+  </script>
+</body>
+</html>
